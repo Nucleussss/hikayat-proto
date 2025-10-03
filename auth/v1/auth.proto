@@ -1,0 +1,92 @@
+syntax = "proto3";
+
+package hikayat.forum.v1;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "./api";
+
+service AuthService {
+    rpc Register(RegisterRequest) returns (RegisterResponse);
+    rpc Login(LoginRequest) returns (LoginResponse);
+    rpc GetUser(GetUserRequest) returns (User);
+    rpc UpdateUserProfile(UpdateUserProfileRequest) returns (UpdateUserProfileResponse);
+    rpc ChangeUserEmail(ChangeUserEmailRequest) returns (ChangeUserEmailResponse);
+    rpc ChangeUserPassword(ChangeUserPasswordRequest) returns (ChangeUserPasswordResponse);
+    rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse);
+}
+
+// model
+message User {
+    string id = 1;
+    string name = 2;
+    string email = 3;
+    bool isActive = 5;
+    google.protobuf.Timestamp created_at = 6;
+    google.protobuf.Timestamp updated_at = 7;
+}
+
+// Request
+message RegisterRequest {
+    string name = 1;
+    string email = 2;
+    string password = 3;
+}
+
+message LoginRequest {
+    string email = 1;
+    string password = 2;
+}
+
+message GetUserRequest {
+    string id = 1;
+}
+
+message UpdateUserProfileRequest {
+    string name = 1;
+    string id = 2;
+}
+
+message ChangeUserEmailRequest {
+	string email = 1;
+	string id = 2;
+}
+
+message ChangeUserPasswordRequest {
+	string currentpassword = 1;
+    string newpassword = 2;
+	string id = 3;
+}
+
+message DeleteUserRequest {
+	string id = 1;
+}
+
+
+// Response
+message RegisterResponse {
+    string message = 1;
+}
+
+message LoginResponse {
+    string message = 1;
+    string token = 2;
+}
+
+message UpdateUserProfileResponse {
+    string message = 1;
+    User user = 2;
+}
+
+message ChangeUserEmailResponse {
+    string message = 1;
+}
+
+message ChangeUserPasswordResponse {
+    string message = 1;
+}
+
+message DeleteUserResponse {
+	string message = 1;
+}
+
