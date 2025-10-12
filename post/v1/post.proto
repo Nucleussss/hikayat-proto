@@ -4,6 +4,7 @@ package hikayat.forum.v1;
 
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/field_mask.proto";
+import "google/protobuf/empty.proto";
 
 option go_package = "github.com/Nucleussss/hikayat-proto/post/v1;v1";
 
