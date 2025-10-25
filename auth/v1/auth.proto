@@ -4,7 +4,7 @@ package hikayat.forum.v1;
 
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/Nucleussss/hikayat-proto/auth/v1;v1";
+option go_package = "github.com/Nucleussss/hikayat-proto/gen/go/auth/v1;authpb";
 
 
 service AuthService {
