@@ -6,7 +6,7 @@ import "google/protobuf/timestamp.proto";
 import "google/protobuf/field_mask.proto";
 import "google/protobuf/empty.proto";
 
-option go_package = "github.com/Nucleussss/hikayat-proto/gen/go/post/v1;postpb";
+option go_package = "gen/go/post/v1;postpb";
 
 service PostService {
   rpc CreatePost(CreatePostRequest) returns (Post);

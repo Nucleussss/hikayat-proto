@@ -810,7 +810,7 @@ const file_auth_v1_auth_proto_rawDesc = "" +
 	"\x0fChangeUserEmail\x12(.hikayat.forum.v1.ChangeUserEmailRequest\x1a).hikayat.forum.v1.ChangeUserEmailResponse\x12o\n" +
 	"\x12ChangeUserPassword\x12+.hikayat.forum.v1.ChangeUserPasswordRequest\x1a,.hikayat.forum.v1.ChangeUserPasswordResponse\x12W\n" +
 	"\n" +
-	"DeleteUser\x12#.hikayat.forum.v1.DeleteUserRequest\x1a$.hikayat.forum.v1.DeleteUserResponseB;Z9github.com/Nucleussss/hikayat-proto/gen/go/auth/v1;authpbb\x06proto3"
+	"DeleteUser\x12#.hikayat.forum.v1.DeleteUserRequest\x1a$.hikayat.forum.v1.DeleteUserResponseB\x17Z\x15gen/go/auth/v1;authpbb\x06proto3"
 
 var (
 	file_auth_v1_auth_proto_rawDescOnce sync.Once

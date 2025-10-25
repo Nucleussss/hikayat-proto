@@ -510,7 +510,7 @@ const file_post_v1_post_proto_rawDesc = "" +
 	"\n" +
 	"UpdatePost\x12#.hikayat.forum.v1.UpdatePostRequest\x1a\x16.hikayat.forum.v1.Post\x12I\n" +
 	"\n" +
-	"DeletePost\x12#.hikayat.forum.v1.DeletePostRequest\x1a\x16.google.protobuf.EmptyB;Z9github.com/Nucleussss/hikayat-proto/gen/go/post/v1;postpbb\x06proto3"
+	"DeletePost\x12#.hikayat.forum.v1.DeletePostRequest\x1a\x16.google.protobuf.EmptyB\x17Z\x15gen/go/post/v1;postpbb\x06proto3"
 
 var (
 	file_post_v1_post_proto_rawDescOnce sync.Once
