@@ -311,6 +311,7 @@ type UpdatePostRequest struct {
 	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	Post          *Post                  `protobuf:"bytes,2,opt,name=post,proto3" json:"post,omitempty"`
 	UpdateMask    *fieldmaskpb.FieldMask `protobuf:"bytes,3,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	AuthorId      string                 `protobuf:"bytes,4,opt,name=author_id,json=authorId,proto3" json:"author_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -366,9 +367,17 @@ func (x *UpdatePostRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
 	return nil
 }
 
+func (x *UpdatePostRequest) GetAuthorId() string {
+	if x != nil {
+		return x.AuthorId
+	}
+	return ""
+}
+
 type DeletePostRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	AuthorId      string                 `protobuf:"bytes,2,opt,name=author_id,json=authorId,proto3" json:"author_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -406,6 +415,13 @@ func (*DeletePostRequest) Descriptor() ([]byte, []int) {
 func (x *DeletePostRequest) GetId() string {
 	if x != nil {
 		return x.Id
+	}
+	return ""
+}
+
+func (x *DeletePostRequest) GetAuthorId() string {
+	if x != nil {
+		return x.AuthorId
 	}
 	return ""
 }
@@ -491,14 +507,16 @@ const file_post_v1_post_proto_rawDesc = "" +
 	"\tauthor_id\x18\x01 \x01(\tR\bauthorId\x12\x1a\n" +
 	"\bcategory\x18\x02 \x01(\tR\bcategory\x12\x12\n" +
 	"\x04page\x18\x03 \x01(\x05R\x04page\x12\x14\n" +
-	"\x05limit\x18\x04 \x01(\x05R\x05limit\"\x8c\x01\n" +
+	"\x05limit\x18\x04 \x01(\x05R\x05limit\"\xa9\x01\n" +
 	"\x11UpdatePostRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12*\n" +
 	"\x04post\x18\x02 \x01(\v2\x16.hikayat.forum.v1.PostR\x04post\x12;\n" +
 	"\vupdate_mask\x18\x03 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
-	"updateMask\"#\n" +
+	"updateMask\x12\x1b\n" +
+	"\tauthor_id\x18\x04 \x01(\tR\bauthorId\"@\n" +
 	"\x11DeletePostRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\"\\\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1b\n" +
+	"\tauthor_id\x18\x02 \x01(\tR\bauthorId\"\\\n" +
 	"\x11ListPostsResponse\x12,\n" +
 	"\x05posts\x18\x01 \x03(\v2\x16.hikayat.forum.v1.PostR\x05posts\x12\x19\n" +
 	"\bhas_more\x18\x02 \x01(\bR\ahasMore2\x89\x03\n" +

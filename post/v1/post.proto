@@ -51,10 +51,12 @@ message UpdatePostRequest {
   string id = 1;
   Post post = 2;
   google.protobuf.FieldMask update_mask = 3; 
+  string author_id = 4;
 }
 
 message DeletePostRequest {
   string id = 1;
+  string author_id = 2;
 }
 
 // response
