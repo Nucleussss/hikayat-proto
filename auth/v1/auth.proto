@@ -72,6 +72,7 @@ message RegisterResponse {
 message LoginResponse {
     string message = 1;
     string token = 2;
+    User user = 3;
 }
 
 message UpdateUserProfileResponse {

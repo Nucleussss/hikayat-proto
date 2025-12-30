@@ -521,6 +521,7 @@ type LoginResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
 	Token         string                 `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	User          *User                  `protobuf:"bytes,3,opt,name=user,proto3" json:"user,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -567,6 +568,13 @@ func (x *LoginResponse) GetToken() string {
 		return x.Token
 	}
 	return ""
+}
+
+func (x *LoginResponse) GetUser() *User {
+	if x != nil {
+		return x.User
+	}
+	return nil
 }
 
 type UpdateUserProfileResponse struct {
@@ -789,10 +797,11 @@ const file_auth_v1_auth_proto_rawDesc = "" +
 	"\x11DeleteUserRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\",\n" +
 	"\x10RegisterResponse\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessage\"?\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage\"k\n" +
 	"\rLoginResponse\x12\x18\n" +
 	"\amessage\x18\x01 \x01(\tR\amessage\x12\x14\n" +
-	"\x05token\x18\x02 \x01(\tR\x05token\"a\n" +
+	"\x05token\x18\x02 \x01(\tR\x05token\x12*\n" +
+	"\x04user\x18\x03 \x01(\v2\x16.hikayat.forum.v1.UserR\x04user\"a\n" +
 	"\x19UpdateUserProfileResponse\x12\x18\n" +
 	"\amessage\x18\x01 \x01(\tR\amessage\x12*\n" +
 	"\x04user\x18\x02 \x01(\v2\x16.hikayat.forum.v1.UserR\x04user\"3\n" +
@@ -845,26 +854,27 @@ var file_auth_v1_auth_proto_goTypes = []any{
 var file_auth_v1_auth_proto_depIdxs = []int32{
 	14, // 0: hikayat.forum.v1.User.created_at:type_name -> google.protobuf.Timestamp
 	14, // 1: hikayat.forum.v1.User.updated_at:type_name -> google.protobuf.Timestamp
-	0,  // 2: hikayat.forum.v1.UpdateUserProfileResponse.user:type_name -> hikayat.forum.v1.User
-	1,  // 3: hikayat.forum.v1.AuthService.Register:input_type -> hikayat.forum.v1.RegisterRequest
-	2,  // 4: hikayat.forum.v1.AuthService.Login:input_type -> hikayat.forum.v1.LoginRequest
-	3,  // 5: hikayat.forum.v1.AuthService.GetUser:input_type -> hikayat.forum.v1.GetUserRequest
-	4,  // 6: hikayat.forum.v1.AuthService.UpdateUserProfile:input_type -> hikayat.forum.v1.UpdateUserProfileRequest
-	5,  // 7: hikayat.forum.v1.AuthService.ChangeUserEmail:input_type -> hikayat.forum.v1.ChangeUserEmailRequest
-	6,  // 8: hikayat.forum.v1.AuthService.ChangeUserPassword:input_type -> hikayat.forum.v1.ChangeUserPasswordRequest
-	7,  // 9: hikayat.forum.v1.AuthService.DeleteUser:input_type -> hikayat.forum.v1.DeleteUserRequest
-	8,  // 10: hikayat.forum.v1.AuthService.Register:output_type -> hikayat.forum.v1.RegisterResponse
-	9,  // 11: hikayat.forum.v1.AuthService.Login:output_type -> hikayat.forum.v1.LoginResponse
-	0,  // 12: hikayat.forum.v1.AuthService.GetUser:output_type -> hikayat.forum.v1.User
-	10, // 13: hikayat.forum.v1.AuthService.UpdateUserProfile:output_type -> hikayat.forum.v1.UpdateUserProfileResponse
-	11, // 14: hikayat.forum.v1.AuthService.ChangeUserEmail:output_type -> hikayat.forum.v1.ChangeUserEmailResponse
-	12, // 15: hikayat.forum.v1.AuthService.ChangeUserPassword:output_type -> hikayat.forum.v1.ChangeUserPasswordResponse
-	13, // 16: hikayat.forum.v1.AuthService.DeleteUser:output_type -> hikayat.forum.v1.DeleteUserResponse
-	10, // [10:17] is the sub-list for method output_type
-	3,  // [3:10] is the sub-list for method input_type
-	3,  // [3:3] is the sub-list for extension type_name
-	3,  // [3:3] is the sub-list for extension extendee
-	0,  // [0:3] is the sub-list for field type_name
+	0,  // 2: hikayat.forum.v1.LoginResponse.user:type_name -> hikayat.forum.v1.User
+	0,  // 3: hikayat.forum.v1.UpdateUserProfileResponse.user:type_name -> hikayat.forum.v1.User
+	1,  // 4: hikayat.forum.v1.AuthService.Register:input_type -> hikayat.forum.v1.RegisterRequest
+	2,  // 5: hikayat.forum.v1.AuthService.Login:input_type -> hikayat.forum.v1.LoginRequest
+	3,  // 6: hikayat.forum.v1.AuthService.GetUser:input_type -> hikayat.forum.v1.GetUserRequest
+	4,  // 7: hikayat.forum.v1.AuthService.UpdateUserProfile:input_type -> hikayat.forum.v1.UpdateUserProfileRequest
+	5,  // 8: hikayat.forum.v1.AuthService.ChangeUserEmail:input_type -> hikayat.forum.v1.ChangeUserEmailRequest
+	6,  // 9: hikayat.forum.v1.AuthService.ChangeUserPassword:input_type -> hikayat.forum.v1.ChangeUserPasswordRequest
+	7,  // 10: hikayat.forum.v1.AuthService.DeleteUser:input_type -> hikayat.forum.v1.DeleteUserRequest
+	8,  // 11: hikayat.forum.v1.AuthService.Register:output_type -> hikayat.forum.v1.RegisterResponse
+	9,  // 12: hikayat.forum.v1.AuthService.Login:output_type -> hikayat.forum.v1.LoginResponse
+	0,  // 13: hikayat.forum.v1.AuthService.GetUser:output_type -> hikayat.forum.v1.User
+	10, // 14: hikayat.forum.v1.AuthService.UpdateUserProfile:output_type -> hikayat.forum.v1.UpdateUserProfileResponse
+	11, // 15: hikayat.forum.v1.AuthService.ChangeUserEmail:output_type -> hikayat.forum.v1.ChangeUserEmailResponse
+	12, // 16: hikayat.forum.v1.AuthService.ChangeUserPassword:output_type -> hikayat.forum.v1.ChangeUserPasswordResponse
+	13, // 17: hikayat.forum.v1.AuthService.DeleteUser:output_type -> hikayat.forum.v1.DeleteUserResponse
+	11, // [11:18] is the sub-list for method output_type
+	4,  // [4:11] is the sub-list for method input_type
+	4,  // [4:4] is the sub-list for extension type_name
+	4,  // [4:4] is the sub-list for extension extendee
+	0,  // [0:4] is the sub-list for field type_name
 }
 
 func init() { file_auth_v1_auth_proto_init() }
