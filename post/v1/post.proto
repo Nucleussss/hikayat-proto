@@ -48,9 +48,18 @@ message ListPostsRequest {
   int32 limit = 4; // Default: 10–20
 }
 
+// Request to update a post (used in PATCH)
 message UpdatePostRequest {
-  Post post = 1;
-  google.protobuf.FieldMask update_mask = 2; 
+  // Required: ID of the post to update (from URL path)
+  string post_id = 1;
+
+  // Optional: Only set fields you want to update
+  string title = 2;
+  string content = 3;
+
+  // Required: Specifies which fields to actually apply
+  // Example: ["title", "content"]
+  google.protobuf.FieldMask update_mask = 4;
 }
 
 message DeletePostRequest {
