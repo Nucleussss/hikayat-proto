@@ -314,10 +314,17 @@ func (x *ListPostsRequest) GetLimit() int32 {
 	return 0
 }
 
+// Request to update a post (used in PATCH)
 type UpdatePostRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Post          *Post                  `protobuf:"bytes,1,opt,name=post,proto3" json:"post,omitempty"`
-	UpdateMask    *fieldmaskpb.FieldMask `protobuf:"bytes,2,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Required: ID of the post to update (from URL path)
+	PostId string `protobuf:"bytes,1,opt,name=post_id,json=postId,proto3" json:"post_id,omitempty"`
+	// Optional: Only set fields you want to update
+	Title   string `protobuf:"bytes,2,opt,name=title,proto3" json:"title,omitempty"`
+	Content string `protobuf:"bytes,3,opt,name=content,proto3" json:"content,omitempty"`
+	// Required: Specifies which fields to actually apply
+	// Example: ["title", "content"]
+	UpdateMask    *fieldmaskpb.FieldMask `protobuf:"bytes,4,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -352,11 +359,25 @@ func (*UpdatePostRequest) Descriptor() ([]byte, []int) {
 	return file_post_v1_post_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *UpdatePostRequest) GetPost() *Post {
+func (x *UpdatePostRequest) GetPostId() string {
 	if x != nil {
-		return x.Post
+		return x.PostId
 	}
-	return nil
+	return ""
+}
+
+func (x *UpdatePostRequest) GetTitle() string {
+	if x != nil {
+		return x.Title
+	}
+	return ""
+}
+
+func (x *UpdatePostRequest) GetContent() string {
+	if x != nil {
+		return x.Content
+	}
+	return ""
 }
 
 func (x *UpdatePostRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
@@ -493,10 +514,12 @@ const file_post_v1_post_proto_rawDesc = "" +
 	"\tauthor_id\x18\x01 \x01(\tR\bauthorId\x12!\n" +
 	"\fcommunity_id\x18\x02 \x01(\tR\vcommunityId\x12\x12\n" +
 	"\x04page\x18\x03 \x01(\x05R\x04page\x12\x14\n" +
-	"\x05limit\x18\x04 \x01(\x05R\x05limit\"|\n" +
-	"\x11UpdatePostRequest\x12*\n" +
-	"\x04post\x18\x01 \x01(\v2\x16.hikayat.forum.v1.PostR\x04post\x12;\n" +
-	"\vupdate_mask\x18\x02 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
+	"\x05limit\x18\x04 \x01(\x05R\x05limit\"\x99\x01\n" +
+	"\x11UpdatePostRequest\x12\x17\n" +
+	"\apost_id\x18\x01 \x01(\tR\x06postId\x12\x14\n" +
+	"\x05title\x18\x02 \x01(\tR\x05title\x12\x18\n" +
+	"\acontent\x18\x03 \x01(\tR\acontent\x12;\n" +
+	"\vupdate_mask\x18\x04 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
 	"updateMask\"#\n" +
 	"\x11DeletePostRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\"\\\n" +
@@ -539,26 +562,25 @@ var file_post_v1_post_proto_goTypes = []any{
 	(*emptypb.Empty)(nil),         // 9: google.protobuf.Empty
 }
 var file_post_v1_post_proto_depIdxs = []int32{
-	7,  // 0: hikayat.forum.v1.Post.created_at:type_name -> google.protobuf.Timestamp
-	7,  // 1: hikayat.forum.v1.Post.updated_at:type_name -> google.protobuf.Timestamp
-	0,  // 2: hikayat.forum.v1.UpdatePostRequest.post:type_name -> hikayat.forum.v1.Post
-	8,  // 3: hikayat.forum.v1.UpdatePostRequest.update_mask:type_name -> google.protobuf.FieldMask
-	0,  // 4: hikayat.forum.v1.ListPostsResponse.posts:type_name -> hikayat.forum.v1.Post
-	1,  // 5: hikayat.forum.v1.PostService.CreatePost:input_type -> hikayat.forum.v1.CreatePostRequest
-	2,  // 6: hikayat.forum.v1.PostService.GetPost:input_type -> hikayat.forum.v1.GetPostRequest
-	3,  // 7: hikayat.forum.v1.PostService.ListPosts:input_type -> hikayat.forum.v1.ListPostsRequest
-	4,  // 8: hikayat.forum.v1.PostService.UpdatePost:input_type -> hikayat.forum.v1.UpdatePostRequest
-	5,  // 9: hikayat.forum.v1.PostService.DeletePost:input_type -> hikayat.forum.v1.DeletePostRequest
-	0,  // 10: hikayat.forum.v1.PostService.CreatePost:output_type -> hikayat.forum.v1.Post
-	0,  // 11: hikayat.forum.v1.PostService.GetPost:output_type -> hikayat.forum.v1.Post
-	6,  // 12: hikayat.forum.v1.PostService.ListPosts:output_type -> hikayat.forum.v1.ListPostsResponse
-	0,  // 13: hikayat.forum.v1.PostService.UpdatePost:output_type -> hikayat.forum.v1.Post
-	9,  // 14: hikayat.forum.v1.PostService.DeletePost:output_type -> google.protobuf.Empty
-	10, // [10:15] is the sub-list for method output_type
-	5,  // [5:10] is the sub-list for method input_type
-	5,  // [5:5] is the sub-list for extension type_name
-	5,  // [5:5] is the sub-list for extension extendee
-	0,  // [0:5] is the sub-list for field type_name
+	7, // 0: hikayat.forum.v1.Post.created_at:type_name -> google.protobuf.Timestamp
+	7, // 1: hikayat.forum.v1.Post.updated_at:type_name -> google.protobuf.Timestamp
+	8, // 2: hikayat.forum.v1.UpdatePostRequest.update_mask:type_name -> google.protobuf.FieldMask
+	0, // 3: hikayat.forum.v1.ListPostsResponse.posts:type_name -> hikayat.forum.v1.Post
+	1, // 4: hikayat.forum.v1.PostService.CreatePost:input_type -> hikayat.forum.v1.CreatePostRequest
+	2, // 5: hikayat.forum.v1.PostService.GetPost:input_type -> hikayat.forum.v1.GetPostRequest
+	3, // 6: hikayat.forum.v1.PostService.ListPosts:input_type -> hikayat.forum.v1.ListPostsRequest
+	4, // 7: hikayat.forum.v1.PostService.UpdatePost:input_type -> hikayat.forum.v1.UpdatePostRequest
+	5, // 8: hikayat.forum.v1.PostService.DeletePost:input_type -> hikayat.forum.v1.DeletePostRequest
+	0, // 9: hikayat.forum.v1.PostService.CreatePost:output_type -> hikayat.forum.v1.Post
+	0, // 10: hikayat.forum.v1.PostService.GetPost:output_type -> hikayat.forum.v1.Post
+	6, // 11: hikayat.forum.v1.PostService.ListPosts:output_type -> hikayat.forum.v1.ListPostsResponse
+	0, // 12: hikayat.forum.v1.PostService.UpdatePost:output_type -> hikayat.forum.v1.Post
+	9, // 13: hikayat.forum.v1.PostService.DeletePost:output_type -> google.protobuf.Empty
+	9, // [9:14] is the sub-list for method output_type
+	4, // [4:9] is the sub-list for method input_type
+	4, // [4:4] is the sub-list for extension type_name
+	4, // [4:4] is the sub-list for extension extendee
+	0, // [0:4] is the sub-list for field type_name
 }
 
 func init() { file_post_v1_post_proto_init() }
