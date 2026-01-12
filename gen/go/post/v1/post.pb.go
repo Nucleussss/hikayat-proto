@@ -27,14 +27,16 @@ const (
 // models
 type Post struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`                             // UUID or auto-generated ID
-	Title         string                 `protobuf:"bytes,2,opt,name=title,proto3" json:"title,omitempty"`                       // Post title
-	Content       string                 `protobuf:"bytes,3,opt,name=content,proto3" json:"content,omitempty"`                   // Main body (Markdown/HTML/plain text)
-	AuthorId      string                 `protobuf:"bytes,4,opt,name=author_id,json=authorId,proto3" json:"author_id,omitempty"` // References user-service user ID
-	Category      string                 `protobuf:"bytes,5,opt,name=category,proto3" json:"category,omitempty"`                 // e.g., "general", "support", "announcements"
-	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	UpdatedAt     *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
-	IsDeleted     bool                   `protobuf:"varint,9,opt,name=is_deleted,json=isDeleted,proto3" json:"is_deleted,omitempty"` // Soft delete support
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`           // UUID or auto-generated ID
+	Title         string                 `protobuf:"bytes,2,opt,name=title,proto3" json:"title,omitempty"`     // Post title
+	Content       string                 `protobuf:"bytes,3,opt,name=content,proto3" json:"content,omitempty"` // Main body (Markdown/HTML/plain text)
+	AuthorId      string                 `protobuf:"bytes,4,opt,name=author_id,json=authorId,proto3" json:"author_id,omitempty"`
+	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	UpdatedAt     *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	IsDeleted     bool                   `protobuf:"varint,7,opt,name=is_deleted,json=isDeleted,proto3" json:"is_deleted,omitempty"`
+	Upvotes       int32                  `protobuf:"varint,8,opt,name=upvotes,proto3" json:"upvotes,omitempty"`
+	Comments      int32                  `protobuf:"varint,9,opt,name=comments,proto3" json:"comments,omitempty"`
+	CommunityId   string                 `protobuf:"bytes,10,opt,name=community_id,json=communityId,proto3" json:"community_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -97,13 +99,6 @@ func (x *Post) GetAuthorId() string {
 	return ""
 }
 
-func (x *Post) GetCategory() string {
-	if x != nil {
-		return x.Category
-	}
-	return ""
-}
-
 func (x *Post) GetCreatedAt() *timestamppb.Timestamp {
 	if x != nil {
 		return x.CreatedAt
@@ -125,13 +120,33 @@ func (x *Post) GetIsDeleted() bool {
 	return false
 }
 
+func (x *Post) GetUpvotes() int32 {
+	if x != nil {
+		return x.Upvotes
+	}
+	return 0
+}
+
+func (x *Post) GetComments() int32 {
+	if x != nil {
+		return x.Comments
+	}
+	return 0
+}
+
+func (x *Post) GetCommunityId() string {
+	if x != nil {
+		return x.CommunityId
+	}
+	return ""
+}
+
 // request
 type CreatePostRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Title         string                 `protobuf:"bytes,1,opt,name=title,proto3" json:"title,omitempty"`
 	Content       string                 `protobuf:"bytes,2,opt,name=content,proto3" json:"content,omitempty"`
-	AuthorId      string                 `protobuf:"bytes,3,opt,name=author_id,json=authorId,proto3" json:"author_id,omitempty"`
-	Category      string                 `protobuf:"bytes,4,opt,name=category,proto3" json:"category,omitempty"`
+	CommunityId   string                 `protobuf:"bytes,3,opt,name=community_id,json=communityId,proto3" json:"community_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -180,16 +195,9 @@ func (x *CreatePostRequest) GetContent() string {
 	return ""
 }
 
-func (x *CreatePostRequest) GetAuthorId() string {
+func (x *CreatePostRequest) GetCommunityId() string {
 	if x != nil {
-		return x.AuthorId
-	}
-	return ""
-}
-
-func (x *CreatePostRequest) GetCategory() string {
-	if x != nil {
-		return x.Category
+		return x.CommunityId
 	}
 	return ""
 }
@@ -240,10 +248,10 @@ func (x *GetPostRequest) GetId() string {
 
 type ListPostsRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	AuthorId      string                 `protobuf:"bytes,1,opt,name=author_id,json=authorId,proto3" json:"author_id,omitempty"` // Optional: filter by user
-	Category      string                 `protobuf:"bytes,2,opt,name=category,proto3" json:"category,omitempty"`                 // Optional: filter by category
-	Page          int32                  `protobuf:"varint,3,opt,name=page,proto3" json:"page,omitempty"`                        // Pagination
-	Limit         int32                  `protobuf:"varint,4,opt,name=limit,proto3" json:"limit,omitempty"`                      // Default: 10–20
+	AuthorId      string                 `protobuf:"bytes,1,opt,name=author_id,json=authorId,proto3" json:"author_id,omitempty"`          // Optional: filter by user
+	CommunityId   string                 `protobuf:"bytes,2,opt,name=community_id,json=communityId,proto3" json:"community_id,omitempty"` // Optional: filter by category
+	Page          int32                  `protobuf:"varint,3,opt,name=page,proto3" json:"page,omitempty"`                                 // Pagination
+	Limit         int32                  `protobuf:"varint,4,opt,name=limit,proto3" json:"limit,omitempty"`                               // Default: 10–20
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -285,9 +293,9 @@ func (x *ListPostsRequest) GetAuthorId() string {
 	return ""
 }
 
-func (x *ListPostsRequest) GetCategory() string {
+func (x *ListPostsRequest) GetCommunityId() string {
 	if x != nil {
-		return x.Category
+		return x.CommunityId
 	}
 	return ""
 }
@@ -308,10 +316,8 @@ func (x *ListPostsRequest) GetLimit() int32 {
 
 type UpdatePostRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Post          *Post                  `protobuf:"bytes,2,opt,name=post,proto3" json:"post,omitempty"`
-	UpdateMask    *fieldmaskpb.FieldMask `protobuf:"bytes,3,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
-	AuthorId      string                 `protobuf:"bytes,4,opt,name=author_id,json=authorId,proto3" json:"author_id,omitempty"`
+	Post          *Post                  `protobuf:"bytes,1,opt,name=post,proto3" json:"post,omitempty"`
+	UpdateMask    *fieldmaskpb.FieldMask `protobuf:"bytes,2,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -346,13 +352,6 @@ func (*UpdatePostRequest) Descriptor() ([]byte, []int) {
 	return file_post_v1_post_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *UpdatePostRequest) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
 func (x *UpdatePostRequest) GetPost() *Post {
 	if x != nil {
 		return x.Post
@@ -367,17 +366,9 @@ func (x *UpdatePostRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
 	return nil
 }
 
-func (x *UpdatePostRequest) GetAuthorId() string {
-	if x != nil {
-		return x.AuthorId
-	}
-	return ""
-}
-
 type DeletePostRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	AuthorId      string                 `protobuf:"bytes,2,opt,name=author_id,json=authorId,proto3" json:"author_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -415,13 +406,6 @@ func (*DeletePostRequest) Descriptor() ([]byte, []int) {
 func (x *DeletePostRequest) GetId() string {
 	if x != nil {
 		return x.Id
-	}
-	return ""
-}
-
-func (x *DeletePostRequest) GetAuthorId() string {
-	if x != nil {
-		return x.AuthorId
 	}
 	return ""
 }
@@ -483,40 +467,39 @@ var File_post_v1_post_proto protoreflect.FileDescriptor
 
 const file_post_v1_post_proto_rawDesc = "" +
 	"\n" +
-	"\x12post/v1/post.proto\x12\x10hikayat.forum.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a google/protobuf/field_mask.proto\x1a\x1bgoogle/protobuf/empty.proto\"\x94\x02\n" +
+	"\x12post/v1/post.proto\x12\x10hikayat.forum.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a google/protobuf/field_mask.proto\x1a\x1bgoogle/protobuf/empty.proto\"\xd1\x02\n" +
 	"\x04Post\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x14\n" +
 	"\x05title\x18\x02 \x01(\tR\x05title\x12\x18\n" +
 	"\acontent\x18\x03 \x01(\tR\acontent\x12\x1b\n" +
-	"\tauthor_id\x18\x04 \x01(\tR\bauthorId\x12\x1a\n" +
-	"\bcategory\x18\x05 \x01(\tR\bcategory\x129\n" +
+	"\tauthor_id\x18\x04 \x01(\tR\bauthorId\x129\n" +
 	"\n" +
-	"created_at\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x129\n" +
+	"created_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x129\n" +
 	"\n" +
-	"updated_at\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\x12\x1d\n" +
+	"updated_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\x12\x1d\n" +
 	"\n" +
-	"is_deleted\x18\t \x01(\bR\tisDeleted\"|\n" +
+	"is_deleted\x18\a \x01(\bR\tisDeleted\x12\x18\n" +
+	"\aupvotes\x18\b \x01(\x05R\aupvotes\x12\x1a\n" +
+	"\bcomments\x18\t \x01(\x05R\bcomments\x12!\n" +
+	"\fcommunity_id\x18\n" +
+	" \x01(\tR\vcommunityId\"f\n" +
 	"\x11CreatePostRequest\x12\x14\n" +
 	"\x05title\x18\x01 \x01(\tR\x05title\x12\x18\n" +
-	"\acontent\x18\x02 \x01(\tR\acontent\x12\x1b\n" +
-	"\tauthor_id\x18\x03 \x01(\tR\bauthorId\x12\x1a\n" +
-	"\bcategory\x18\x04 \x01(\tR\bcategory\" \n" +
+	"\acontent\x18\x02 \x01(\tR\acontent\x12!\n" +
+	"\fcommunity_id\x18\x03 \x01(\tR\vcommunityId\" \n" +
 	"\x0eGetPostRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\"u\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\"|\n" +
 	"\x10ListPostsRequest\x12\x1b\n" +
-	"\tauthor_id\x18\x01 \x01(\tR\bauthorId\x12\x1a\n" +
-	"\bcategory\x18\x02 \x01(\tR\bcategory\x12\x12\n" +
+	"\tauthor_id\x18\x01 \x01(\tR\bauthorId\x12!\n" +
+	"\fcommunity_id\x18\x02 \x01(\tR\vcommunityId\x12\x12\n" +
 	"\x04page\x18\x03 \x01(\x05R\x04page\x12\x14\n" +
-	"\x05limit\x18\x04 \x01(\x05R\x05limit\"\xa9\x01\n" +
-	"\x11UpdatePostRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12*\n" +
-	"\x04post\x18\x02 \x01(\v2\x16.hikayat.forum.v1.PostR\x04post\x12;\n" +
-	"\vupdate_mask\x18\x03 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
-	"updateMask\x12\x1b\n" +
-	"\tauthor_id\x18\x04 \x01(\tR\bauthorId\"@\n" +
+	"\x05limit\x18\x04 \x01(\x05R\x05limit\"|\n" +
+	"\x11UpdatePostRequest\x12*\n" +
+	"\x04post\x18\x01 \x01(\v2\x16.hikayat.forum.v1.PostR\x04post\x12;\n" +
+	"\vupdate_mask\x18\x02 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
+	"updateMask\"#\n" +
 	"\x11DeletePostRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1b\n" +
-	"\tauthor_id\x18\x02 \x01(\tR\bauthorId\"\\\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\"\\\n" +
 	"\x11ListPostsResponse\x12,\n" +
 	"\x05posts\x18\x01 \x03(\v2\x16.hikayat.forum.v1.PostR\x05posts\x12\x19\n" +
 	"\bhas_more\x18\x02 \x01(\bR\ahasMore2\x89\x03\n" +
