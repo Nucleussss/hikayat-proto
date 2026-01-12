@@ -18,22 +18,24 @@ service PostService {
 
 // models
 message Post {
-  string id = 1;                    // UUID or auto-generated ID
-  string title = 2;                 // Post title
-  string content = 3;               // Main body (Markdown/HTML/plain text)
-  string author_id = 4;             // References user-service user ID
-  string category = 5;              // e.g., "general", "support", "announcements"
+  string id = 1; // UUID or auto-generated ID
+  string title = 2; // Post title
+  string content = 3; // Main body (Markdown/HTML/plain text)
+  string author = 4;
+  string category = 5; // e.g., "general", "support", "announcements"
   google.protobuf.Timestamp created_at = 7;
   google.protobuf.Timestamp updated_at = 8;
-  bool is_deleted = 9;              // Soft delete support
+  bool is_deleted = 9; // Soft delete support
+  int32 upvotes = 10;
+  int32 comments = 11;
+  string community = 12;
 }
 
 // request
 message CreatePostRequest {
   string title = 1;
   string content = 2;
-  string author_id = 3;
-  string category = 4;
+  string category = 3;
 }
 
 message GetPostRequest {
@@ -41,22 +43,19 @@ message GetPostRequest {
 }
 
 message ListPostsRequest {
-  string author_id = 1;             // Optional: filter by user
-  string category = 2;              // Optional: filter by category
-  int32 page = 3;                   // Pagination
-  int32 limit = 4;                  // Default: 10–20
+  string author = 1; // Optional: filter by user
+  string category = 2; // Optional: filter by category
+  int32 page = 3; // Pagination
+  int32 limit = 4; // Default: 10–20
 }
 
 message UpdatePostRequest {
-  string id = 1;
-  Post post = 2;
-  google.protobuf.FieldMask update_mask = 3; 
-  string author_id = 4;
+  Post post = 1;
+  google.protobuf.FieldMask update_mask = 2; 
 }
 
 message DeletePostRequest {
   string id = 1;
-  string author_id = 2;
 }
 
 // response
