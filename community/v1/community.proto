@@ -1,0 +1,89 @@
+syntax = "proto3";
+
+package hikayat.forum.v1;
+
+option go_package = "gen/go/community/v1;communitypb";
+
+service CommunityService {
+    rpc CreateCommunity(CreateCommunityRequest) returns (CreateCommunityResponse);
+    rpc GetCommunity(GetCommunityRequest) returns (GetCommunityResponse);
+    rpc ListCommunities(ListCommunitiesRequest) returns (ListCommunitiesResponse);
+    rpc UpdateCommunity(UpdateCommunityRequest) returns (UpdateCommunityResponse);
+    rpc DeleteCommunity(DeleteCommunityRequest) returns (DeleteCommunityResponse);
+}
+
+// explain models below
+message Community {
+  // Unique identifier for the community
+  string id = 1;
+
+  // Name of the community (e.g., "programming")
+  string name = 2;
+
+  // Brief description of the community's purpose and topics
+  string description = 3;
+
+  // ID of the user who owns/created the community
+  string owner_id = 4;
+
+  // Total number of members in the community
+  int32 member_count = 5;
+
+  // Whether the community is private (invite-only) or public
+  bool is_private = 6;
+
+  // Timestamp when the community was created (Unix timestamp)
+  int64 created_at = 7;
+
+  // Timestamp when the community was last updated (Unix timestamp)
+  int64 updated_at = 8;
+}
+
+// requests
+message CreateCommunityRequest {
+  string name = 1;
+  string description = 2;
+  bool is_private = 3;
+}
+
+message GetCommunityRequest {
+  string id = 1;
+}
+
+message ListCommunitiesRequest {
+  int32 page = 1;
+  int32 limit = 2;
+}
+
+message UpdateCommunityRequest {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  bool is_private = 4;
+}
+
+message DeleteCommunityRequest {
+  string id = 1;
+}
+
+// responses
+message CreateCommunityResponse {
+  Community community = 1;
+}
+
+message GetCommunityResponse {
+  Community community = 1;
+}
+
+message ListCommunitiesResponse {
+  repeated Community communities = 1;
+  bool has_more = 2;
+}
+
+message UpdateCommunityResponse {
+  Community community = 1;
+}
+
+message DeleteCommunityResponse {
+  Community community = 1;
+}
